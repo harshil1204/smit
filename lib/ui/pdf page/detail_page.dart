@@ -19,7 +19,7 @@ class _PdfPageState extends State<PdfPage> {
   void deleteBill(String catId) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
-      await firestore.collection('Bill').doc(catId).delete();
+      await firestore.collection('tractor').doc(catId).delete();
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('data deleted successfully.')));
       // Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => HomePage(),),(route) => false,); // Close the dialog after deletion
@@ -124,8 +124,17 @@ class _PdfPageState extends State<PdfPage> {
                       ),
                       Row(
                         children: [
-                          const Expanded(child: CommonText.extraBold("Address :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold(widget.data['address'].toString(),size: 18,color: AppColor.black,)),
+                          const Expanded(child: CommonText.extraBold("start Time :",size: 18,color: AppColor.black,)),
+                          Expanded(child: CommonText.extraBold(widget.data['start'].toString(),size: 18,color: AppColor.black,)),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        child: Divider(color: AppColor.primary),
+                      ), Row(
+                        children: [
+                          const Expanded(child: CommonText.extraBold("end Time :",size: 18,color: AppColor.black,)),
+                          Expanded(child: CommonText.extraBold(widget.data['end'].toString(),size: 18,color: AppColor.black,)),
                         ],
                       ),
                       const Padding(
@@ -133,9 +142,18 @@ class _PdfPageState extends State<PdfPage> {
                         child: Divider(color: AppColor.primary),
                       ),
                       Row(
+                        children: [
+                          const Expanded(child: CommonText.extraBold("Working Time :",size: 18,color: AppColor.black,)),
+                          Expanded(child: CommonText.extraBold(widget.data['workingHours'].toString(),size: 18,color: AppColor.black,)),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        child: Divider(color: AppColor.primary),
+                      ), Row(
                         children: [
                           const Expanded(child: CommonText.extraBold("Items :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold(widget.data['items'].toString(),size: 18,color: AppColor.black,)),
+                          Expanded(child: CommonText.extraBold(widget.data['work'].toString(),size: 18,color: AppColor.black,)),
                         ],
                       ),
                       const Padding(
@@ -144,30 +162,10 @@ class _PdfPageState extends State<PdfPage> {
                       ),
                       Row(
                         children: [
-                          const Expanded(child: CommonText.extraBold("Total :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold("₹ ${widget.data['totalRent'].toString()}",size: 18,color: AppColor.black,)),
+                          const Expanded(child: CommonText.extraBold("rent :",size: 18,color: AppColor.black,)),
+                          Expanded(child: CommonText.extraBold("₹ ${widget.data['price'].toString()}",size: 18,color: AppColor.black,)),
                         ],
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Divider(color: AppColor.primary),
-                      ),
-                      Row(
-                        children: [
-                          const Expanded(child: CommonText.extraBold("Advanced :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold("₹ ${widget.data['advanced'].toString()}",size: 18,color: AppColor.black,)),
-                        ],
-                      ),
-                      // const Padding(
-                      //   padding: EdgeInsets.symmetric(vertical: 12.0),
-                      //   child: Divider(color: AppColor.primary),
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     const Expanded(child: CommonText.extraBold("Pending :",size: 18,color: AppColor.black,)),
-                      //     Expanded(child: CommonText.extraBold("₹ ${widget.data['pendingRent'].toString()}",size: 18,color: AppColor.black,)),
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),

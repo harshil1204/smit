@@ -1,27 +1,29 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
-import 'package:smit/ui/pdf%20page/detail_page.dart';
+import 'package:smit/ui/khatar/add_khatar.dart';
+import 'package:smit/ui/khatar/update_khatar.dart';
 
-import 'add_bill.dart';
-
-class BillList extends StatefulWidget {
+class BillKhatarList extends StatefulWidget {
   String? name;
   String? title;
   int? month;
   int? year;
-  BillList({super.key,this.name,this.month,this.year,this.title});
+  int? ind;
+  BillKhatarList({super.key,this.name,this.month,this.year,this.title,this.ind});
 
   @override
-  State<BillList> createState() => _BillListState();
+  State<BillKhatarList> createState() => _BillKhatarListState();
 }
 
-class _BillListState extends State<BillList> {
+class _BillKhatarListState extends State<BillKhatarList> {
   int total = 0;
   @override
   Widget build(BuildContext context) {
+    print(widget.ind);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -29,7 +31,7 @@ class _BillListState extends State<BillList> {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("tractor")
+            .collection("Khatar")
             .where('month',isEqualTo: widget.month)
             .where('year',isEqualTo: widget.year)
             .orderBy('time',descending: true).snapshots(),
@@ -68,7 +70,7 @@ class _BillListState extends State<BillList> {
                       var data=snapshot.data!.docs[index];
                       return InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPage(data:data),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateKhatar(data:data),));
                         },
                         child: Card(
                           clipBehavior: Clip.hardEdge,
@@ -83,12 +85,10 @@ class _BillListState extends State<BillList> {
                             child: Column(
                               children: [
                                 customRow(data['date'],"date : "),
-                                customRow(data['name'],"name : "),
-                                customRow(data['start'],"start Time : "),
-                                customRow(data['end'],"end Time : "),
-                                customRow(data['workingHours'],"working Time : "),
-                                customRow(data['price'],"rent : "),
-                                customRow(data['work'],"Items : "),
+                                // const Divider(color: AppColor.black,thickness: 0.2),
+                                customRow(data['price'],"price : "),
+                                //const Divider(color: AppColor.black,thickness: 0.2),
+                                CachedNetworkImage(imageUrl: data['url'].toString(),width: 300,height: 200,fit: BoxFit.cover,)
                               ],
                             ),
                           ),
@@ -108,7 +108,9 @@ class _BillListState extends State<BillList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  AddBill(),));
+          // if(widget.ind == 0) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  const AddKhatar(),));
+          // }
         },
         tooltip: "Add bill",
         elevation: 0.5,

@@ -3,25 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
-import 'package:smit/ui/pdf%20page/detail_page.dart';
+import 'package:smit/ui/animal/add_animal.dart';
+import 'package:smit/ui/animal/update_animal.dart';
+import 'package:smit/ui/majur/add_majur.dart';
+import 'package:smit/ui/majur/update_majur.dart';
 
-import 'add_bill.dart';
-
-class BillList extends StatefulWidget {
+class BillAnimalList extends StatefulWidget {
   String? name;
   String? title;
   int? month;
   int? year;
-  BillList({super.key,this.name,this.month,this.year,this.title});
+  int? ind;
+  BillAnimalList({super.key,this.name,this.month,this.year,this.title,this.ind});
 
   @override
-  State<BillList> createState() => _BillListState();
+  State<BillAnimalList> createState() => _BillAnimalListState();
 }
 
-class _BillListState extends State<BillList> {
+class _BillAnimalListState extends State<BillAnimalList> {
   int total = 0;
+  int allTotal = 0;
   @override
   Widget build(BuildContext context) {
+    print(widget.ind);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -29,15 +33,16 @@ class _BillListState extends State<BillList> {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("tractor")
+            .collection("animal")
             .where('month',isEqualTo: widget.month)
             .where('year',isEqualTo: widget.year)
             .orderBy('time',descending: true).snapshots(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
             total=0;
+            allTotal= 0;
             snapshot.data!.docs.forEach((element) {
-              total= total + int.parse(element['price'].toString());
+              allTotal= allTotal + int.parse(element['docFee'].toString()) + int.parse(element['medical'].toString());
             });
             return Column(
               children: [
@@ -54,7 +59,7 @@ class _BillListState extends State<BillList> {
                     decoration: BoxDecoration(
                       color: AppColor.darkBoxBg,
                     ),
-                    child: CommonText.bold("Total : ${total.toString()}",size: 18,color:AppColor.primary),
+                    child: CommonText.bold("Total : ${allTotal.toString()}",size: 18,color:AppColor.primary),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -66,9 +71,10 @@ class _BillListState extends State<BillList> {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       var data=snapshot.data!.docs[index];
+                      total=int.parse( data['docFee'].toString()) + int.parse(data['medical'].toString());
                       return InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPage(data:data),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => updateAnimal(data:data),));
                         },
                         child: Card(
                           clipBehavior: Clip.hardEdge,
@@ -83,12 +89,11 @@ class _BillListState extends State<BillList> {
                             child: Column(
                               children: [
                                 customRow(data['date'],"date : "),
-                                customRow(data['name'],"name : "),
-                                customRow(data['start'],"start Time : "),
-                                customRow(data['end'],"end Time : "),
-                                customRow(data['workingHours'],"working Time : "),
-                                customRow(data['price'],"rent : "),
-                                customRow(data['work'],"Items : "),
+                                customRow(data['docName'],"Doctor Name : "),
+                                customRow("₹ ${data['docFee']}","Doctor Fee : "),
+                                customRow("₹ ${data['medical']}","Medical Cost : "),
+                                customRow(data['description'],"description : "),
+                                customRow("₹ ${total}","Total : "),
                               ],
                             ),
                           ),
@@ -108,7 +113,9 @@ class _BillListState extends State<BillList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  AddBill(),));
+          // if(widget.ind == 0) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  const AddAnimal(),));
+          // }
         },
         tooltip: "Add bill",
         elevation: 0.5,

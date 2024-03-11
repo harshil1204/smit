@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
 import 'package:smit/ui/add%20bill/bill_list.dart';
+import 'package:smit/ui/animal/animal_list.dart';
 import 'package:smit/ui/dava/dava_list.dart';
+import 'package:smit/ui/khatar/khatar_list.dart';
+import 'package:smit/ui/majur/majur_list.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -81,12 +84,43 @@ class _HomePageState extends State<HomePage> {
                           month:index+1,
                           year: int.parse(currentYear.year.toString()),)));
                   }
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                  //     BillList(
-                  //       title:widget.title,
-                  //       name:month[index].toString(),
-                  //       month:index+1,
-                  //       year: int.parse(currentYear.year.toString()),)));
+                  else if(widget.ind == 1){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        BillKhatarList(
+                          ind:widget.ind,
+                          title:widget.title,
+                          name:month[index].toString(),
+                          month:index+1,
+                          year: int.parse(currentYear.year.toString()),)));
+                  }
+                  else if(widget.ind == 2){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        BillMajurList(
+                          ind:widget.ind,
+                          title:widget.title,
+                          name:month[index].toString(),
+                          month:index+1,
+                          year: int.parse(currentYear.year.toString()),)));
+                  }
+                  else if(widget.ind == 4){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        BillAnimalList(
+                          ind:widget.ind,
+                          title:widget.title,
+                          name:month[index].toString(),
+                          month:index+1,
+                          year: int.parse(currentYear.year.toString()),)));
+                  }
+                  else if(widget.ind == 3){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        BillList(
+                          // ind:widget.ind,
+                          title:widget.title,
+                          name:month[index].toString(),
+                          month:index+1,
+                          year: int.parse(currentYear.year.toString()),)));
+                  }
+
                 },
                 child: Container(
                   height: 80,

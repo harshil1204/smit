@@ -43,7 +43,7 @@ class _CreatePdfPageState extends State<CreatePdfPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: PdfPreview(
-        pdfFileName: "SR Sounds.pdf",
+        pdfFileName: "chovatiya.pdf",
         onShared: (context){
           if (kDebugMode) {
             print('shared');
@@ -91,7 +91,7 @@ pw.Widget buildItems(var data,int value){
 Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
 
   final pdf = pw.Document();
-  final totalAmount = int.parse(data['totalRent'])-int.parse(data['advanced']);
+  // final totalAmount = int.parse(data['totalRent'])-int.parse(data['advanced']);
   DateTime currentDate = DateTime.now();
   final image = pw.MemoryImage
     ((await rootBundle.load('assets/images/newPoster.jpeg')).buffer.asUint8List());
@@ -127,28 +127,26 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                   children: [
                     pw.Text('From :', style: boldText),
                     pw.SizedBox(height: 10),
-                    pw.Text('SR SOUND', style: simpleText),
+                    pw.Text('chovatiya', style: simpleText),
                     pw.Container(
                       width: 200,
-                      child: pw.Text('Sarthana jakat naka surat, 395006', style: simpleText),
+                      child: pw.Text('Gundala gir, 395006', style: simpleText),
                     ),
-                    pw.Text('+919328088008', style: simpleText),
-                    pw.Text('Khenimukesh188@gmail.com', style: simpleText),
                   ],
                 ),
-                pw.Column(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  // crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Container(
-                      height: 60,
-                      width: 140,
-                      color: PdfColors.black,
-                      child: pw.Image(image, fit: pw.BoxFit.fill),
-                    ),
-                    // pw.SizedBox(width: 40),
-                  ],
-                ),
+                // pw.Column(
+                //   mainAxisAlignment: pw.MainAxisAlignment.start,
+                //   // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                //   children: [
+                //     pw.Container(
+                //       height: 60,
+                //       width: 140,
+                //       color: PdfColors.black,
+                //       child: pw.Image(image, fit: pw.BoxFit.fill),
+                //     ),
+                //     // pw.SizedBox(width: 40),
+                //   ],
+                // ),
               ],
             ),
             pw.SizedBox(height: 25),
@@ -185,7 +183,7 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                       mainAxisAlignment: pw.MainAxisAlignment.start,
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        pw.Text(data['invoiceId'].toString(), style: simpleText),
+                        pw.Text("1", style: simpleText),
                         pw.Text('${currentDate.day}-${currentDate.month}-${currentDate.year}', style: simpleText),
                         pw.Text(data['date'], style: simpleText),
                       ],
@@ -212,7 +210,7 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                   children: [
                     buildTitles('Date'),
                     buildTitles('Items'),
-                    buildTitles('Address'),
+                    // buildTitles('Address'),
                     buildTitles('Amount'),
                   ]
                 ),
@@ -220,11 +218,11 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                  verticalAlignment: pw.TableCellVerticalAlignment.full,
                   children: [
                     buildItems(data['date'],0),
-                    buildItems(data['items'],0),
-                    buildItems(data['address'],0),
+                    buildItems(data['work'].toString(),0),
+                    // buildItems(data['address'],0),
                 pw.Padding(
                   padding: const pw.EdgeInsets.symmetric(horizontal: 7,vertical: 2),
-                  child: pw.Text(formatter.format(int.parse(data['totalRent'])), style: simpleText),
+                  child: pw.Text(formatter.format(int.parse(data['price'])), style: simpleText),
                       )
                   ]
                 )
@@ -243,15 +241,15 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.Text('Sub total :', style: boldText),
-                        pw.Text('Received :', style: boldText),
+                        // pw.Text('Received :', style: boldText),
                       ],
                     ),
                     pw.SizedBox(width: 40),
                     pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        pw.Text(formatter.format(int.parse(data['totalRent'])), style: simpleText),
-                        pw.Text(formatter.format(int.parse(data['advanced'])), style: simpleText),
+                        pw.Text(formatter.format(int.parse(data['price'])), style: simpleText),
+                        // pw.Text(formatter.format(int.parse(data['price'])), style: simpleText),
                       ],
                     ),
                   ],
@@ -275,7 +273,7 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                     pw.Container(),
                     pw.Text('Balance :', style: boldText),
                     pw.SizedBox(width: 48),
-                    pw.Text(formatter.format(totalAmount), style: simpleText),
+                    pw.Text(formatter.format(int.parse(data['price'].toString())), style: simpleText),
                   ],
                 ),
               ],
@@ -303,7 +301,7 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                         children: [
                           pw.Padding(
                               padding: const pw.EdgeInsets.symmetric(horizontal: 6),
-                              child: pw.Center(child: pw.Text("${NumberToWordsEnglish.convert(totalAmount)} only",style: simpleText))
+                              child: pw.Center(child: pw.Text("${NumberToWordsEnglish.convert(int.parse(data['price'].toString()))} only",style: simpleText))
                           ),
                         ]
                     ),

@@ -73,7 +73,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     setState(() {
     });
   }
-  DateFormat format = new DateFormat("dd-MM-yyyy");
+  DateFormat format = DateFormat("dd-MM-yyyy");
 
   @override
   void initState() {

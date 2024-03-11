@@ -3,25 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
-import 'package:smit/ui/pdf%20page/detail_page.dart';
+import 'package:smit/ui/majur/add_majur.dart';
+import 'package:smit/ui/majur/update_majur.dart';
 
-import 'add_bill.dart';
-
-class BillList extends StatefulWidget {
+class BillMajurList extends StatefulWidget {
   String? name;
   String? title;
   int? month;
   int? year;
-  BillList({super.key,this.name,this.month,this.year,this.title});
+  int? ind;
+  BillMajurList({super.key,this.name,this.month,this.year,this.title,this.ind});
 
   @override
-  State<BillList> createState() => _BillListState();
+  State<BillMajurList> createState() => _BillMajurListState();
 }
 
-class _BillListState extends State<BillList> {
+class _BillMajurListState extends State<BillMajurList> {
   int total = 0;
+  int allTotal = 0;
   @override
   Widget build(BuildContext context) {
+    print(widget.ind);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -29,15 +31,16 @@ class _BillListState extends State<BillList> {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection("tractor")
+            .collection("majur")
             .where('month',isEqualTo: widget.month)
             .where('year',isEqualTo: widget.year)
             .orderBy('time',descending: true).snapshots(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
             total=0;
+            allTotal= 0;
             snapshot.data!.docs.forEach((element) {
-              total= total + int.parse(element['price'].toString());
+              allTotal= allTotal + int.parse(element['majuri'].toString()) * int.parse(element['totalMajuri'].toString());
             });
             return Column(
               children: [
@@ -54,7 +57,7 @@ class _BillListState extends State<BillList> {
                     decoration: BoxDecoration(
                       color: AppColor.darkBoxBg,
                     ),
-                    child: CommonText.bold("Total : ${total.toString()}",size: 18,color:AppColor.primary),
+                    child: CommonText.bold("Total : ${allTotal.toString()}",size: 18,color:AppColor.primary),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -66,9 +69,10 @@ class _BillListState extends State<BillList> {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       var data=snapshot.data!.docs[index];
+                      total=int.parse( data['totalMajuri'].toString()) * int.parse(data['majuri'].toString());
                       return InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPage(data:data),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => updateMajur(data:data),));
                         },
                         child: Card(
                           clipBehavior: Clip.hardEdge,
@@ -83,12 +87,12 @@ class _BillListState extends State<BillList> {
                             child: Column(
                               children: [
                                 customRow(data['date'],"date : "),
-                                customRow(data['name'],"name : "),
-                                customRow(data['start'],"start Time : "),
-                                customRow(data['end'],"end Time : "),
-                                customRow(data['workingHours'],"working Time : "),
-                                customRow(data['price'],"rent : "),
-                                customRow(data['work'],"Items : "),
+                                // const Divider(color: AppColor.black,thickness: 0.2),
+                                customRow("₹ ${data['majuri']}","majuri : "),
+                                //const Divider(color: AppColor.black,thickness: 0.2),
+                                customRow(data['totalMajuri'],"Total majur : "),
+                                customRow("₹ ${total}","Total : "),
+                                customRow(data['description'],"description : "),
                               ],
                             ),
                           ),
@@ -108,7 +112,9 @@ class _BillListState extends State<BillList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  AddBill(),));
+          // if(widget.ind == 0) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  const AddMajur(),));
+          // }
         },
         tooltip: "Add bill",
         elevation: 0.5,
