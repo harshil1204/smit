@@ -56,7 +56,7 @@ class _BillKhatarListState extends State<BillKhatarList> {
                     decoration: BoxDecoration(
                       color: AppColor.darkBoxBg,
                     ),
-                    child: CommonText.bold("Total : ${total.toString()}",size: 18,color:AppColor.primary),
+                    child: CommonText.bold("કુલ : ${total.toString()}",size: 18,color:AppColor.primary),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -84,9 +84,9 @@ class _BillKhatarListState extends State<BillKhatarList> {
                             ),
                             child: Column(
                               children: [
-                                customRow(data['date'],"date : "),
+                                customRow(data['date'],"તારીખ : "),
                                 // const Divider(color: AppColor.black,thickness: 0.2),
-                                customRow(data['price'],"price : "),
+                                customRow(data['price'],"ખર્ચ : "),
                                 //const Divider(color: AppColor.black,thickness: 0.2),
                                 CachedNetworkImage(imageUrl: data['url'].toString(),width: 300,height: 200,fit: BoxFit.cover,)
                               ],

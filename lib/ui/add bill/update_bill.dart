@@ -93,7 +93,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const CommonText.semiBold("Update Bill",size: 18),
+        title: const CommonText.semiBold("સુધારો",size: 18),
       ),
         body: SingleChildScrollView(
           child: Padding(
@@ -105,7 +105,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                   controller: _dateTimeController,
                   readOnly: true,
                   decoration: const InputDecoration(
-                    labelText: 'Choose order Date',
+                    labelText: 'તારીખ',
                     labelStyle: TextStyle(
                         color: AppColor.primary
                     ),

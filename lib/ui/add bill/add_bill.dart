@@ -18,42 +18,17 @@ class AddBill extends StatefulWidget {
 class _AddBillState extends State<AddBill> {
   final TextEditingController _dateTimeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _dateTimeStartController = TextEditingController();
   final TextEditingController _itemController = TextEditingController();
-  final TextEditingController _dateTimeEndController = TextEditingController();
   final TextEditingController _totalRentController = TextEditingController();
-  final TextEditingController _dateTotalController = TextEditingController();
+  final TextEditingController _dropTimeController = TextEditingController();
+  final TextEditingController _dropPriceController = TextEditingController();
 
   DateTime? picked;
-  TimeOfDay? startPicked;
-  TimeOfDay? endPicked;
-  List multipleSelected = [];
-  List checkListItems = [
-    {
-      "id": 0,
-      "value": false,
-      "title": "dati",
-    },
-    {
-      "id": 1,
-      "value": false,
-      "title": "rap",
-    },
-    {
-      "id": 2,
-      "value": false,
-      "title": "madh",
-    },
-    {
-      "id": 3,
-      "value": false,
-      "title": "fero",
-    },
-  ];
-  TimeOfDay selectedTime = TimeOfDay.now();
-  late Duration timeDifference;
+  List<String> items = [];
+  String? selectedValue;
+  List<String> workInfo = [];
 
-  void addBillToFirestore(String items, String name, String totalRent, String startTime, String endTime, String totalTime,String dateTime) async {
+  void addBillToFirestore(String items, String name, String totalRent, String dateTime) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     invoiceID = invoiceID ?? 0 + 1;
     try {
@@ -63,11 +38,8 @@ class _AddBillState extends State<AddBill> {
         'name': name,
         'month': picked!.month,
         'year': picked!.year,
-        'work': multipleSelected,
-        'start': startTime,
-        'end': endTime,
-        "workingHours": totalTime,
-        "price": totalRent,
+        'items':items,
+        'price': totalRent,
         'time': DateTime.now(),
       });
 
@@ -95,46 +67,11 @@ class _AddBillState extends State<AddBill> {
     setState(() {});
   }
 
-  Future<void> _selectDateStart(BuildContext context) async {
-    startPicked = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (startPicked != null) {
-      _dateTimeStartController.text = "${startPicked!.hour.toString()} : ${startPicked!.minute.toString()}";
-    }
-    setState(() {});
-  }
-
-  Future<void> _selectDateEnd(BuildContext context) async {
-    endPicked = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (endPicked != null) {
-      _dateTimeEndController.text = "${endPicked!.hour.toString()} : ${endPicked!.minute.toString()}";
-    }
-    setState(() {});
-  }
-
-  void calculateTimeDifference() {
-    timeDifference = Duration.zero;
-    if (startPicked != null && endPicked != null) {
-      final DateTime startDateTime = DateTime(2022, 1, 1, startPicked!.hour, startPicked!.minute);
-      final DateTime endDateTime = DateTime(2022, 1, 1, endPicked!.hour, endPicked!.minute);
-
-      timeDifference = endDateTime.difference(startDateTime);
-
-      setState(() {
-        _dateTotalController.text = timeDifference.toString().split('.')[0];
-      });
-      print('Time Difference: $timeDifference');
-    }
-  }
-
   @override
   void initState() {
     getInvoiceId();
+    // selectedValue=" ";
+    items.addAll(['દાતી','રાપ','માધ','ફેરો','ભાર']);
     _dateTimeController.text = "";
     super.initState();
   }
@@ -146,6 +83,7 @@ class _AddBillState extends State<AddBill> {
         title: const CommonText.semiBold("Add Bill", size: 18),
       ),
       body: SingleChildScrollView(
+        reverse: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14.0),
           child: Column(
@@ -157,7 +95,7 @@ class _AddBillState extends State<AddBill> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose order Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: () {
@@ -170,49 +108,7 @@ class _AddBillState extends State<AddBill> {
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Customer name',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _dateTimeStartController,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  labelText: 'Choose start Date',
-                  border: OutlineInputBorder(),
-                ),
-                onTap: () {
-                  _selectDateStart(context);
-                  // calculateTimeDifference();
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _dateTimeEndController,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  labelText: 'Choose end Date',
-                  border: OutlineInputBorder(),
-                ),
-                onTap: () async {
-                  await _selectDateEnd(context);
-                  calculateTimeDifference();
-                  setState(() {});
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _dateTotalController,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  labelText: 'total time',
+                  labelText: 'નામ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -220,47 +116,154 @@ class _AddBillState extends State<AddBill> {
                 height: 10,
               ),
               const CommonText.bold(
-                "Choose work : ",
+                "કામ પસંદ કરો : ",
                 color: AppColor.primary,
                 size: 20,
               ),
-              Column(
-                children: List.generate(
-                  checkListItems.length,
-                  (index) => CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                    title: Text(
-                      checkListItems[index]["title"],
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                    value: checkListItems[index]["value"],
-                    onChanged: (value) {
-                      setState(() {
-                        checkListItems[index]["value"] = value;
-                        if (multipleSelected.contains(checkListItems[index]['title'])) {
-                          multipleSelected.remove(checkListItems[index]['title']);
-                        } else {
-                          multipleSelected.add(checkListItems[index]['title']);
-                        }
-                        _itemController.text = multipleSelected.toString();
-                      });
-                    },
-                  ),
-                ),
-              ),
+              ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(
+                              builder: (context, setState) {
+                              return AlertDialog(
+                               title: Column(
+                                 children: [
+                                   const CommonText.bold("વિગતો ઉમેરો",size: 24,color:AppColor.primary),
+                                   const SizedBox(height: 30,),
+                                   SizedBox(
+                                     width: double.infinity,
+                                     height: 48,
+                                     child: DropdownButton<String>(
+                                     value: selectedValue,
+                                       hint: const Text(
+                                         "પસંદ કરો",
+                                         style: TextStyle(
+                                             color: Colors.black,
+                                             fontSize: 16,
+                                             fontWeight: FontWeight.w600),
+                                       ),
+
+                                         items: items.map((String e) {
+                                           return DropdownMenuItem<String>(
+                                                value: e,
+                                               child:CommonText.semiBold(e,color: AppColor.primary,),
+                                           );
+                                         }).toList(),
+                                         onChanged: (value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              selectedValue = value!;
+                                            });
+                                          }
+                                         },
+                                       // selectedItemBuilder: (BuildContext ctx) {
+                                       //   return items.map((String item) {
+                                       //     return DropdownMenuItem(value: item, child: CommonText.regular(item, size: 15, color: AppColor.black,));
+                                       //   }).toList();
+                                       // },
+                                     ),
+                                   ),
+                                   TextField(
+                                     controller: _dropTimeController,
+                                     decoration: const InputDecoration(
+                                       labelText: 'સમય',
+                                       border: OutlineInputBorder(),
+                                     ),
+                                   ),
+                                   const SizedBox(height: 10,),
+                                   TextField(
+                                     controller: _dropPriceController,
+                                     keyboardType: TextInputType.number,
+                                     decoration: const InputDecoration(
+                                       labelText: 'ભાડું',
+                                       border: OutlineInputBorder(),
+                                     ),
+                                   ),
+                                   // const SizedBox(height: 10,),
+                                   // TextField(
+                                   //   controller: _timeRapController,
+                                   //   decoration: InputDecoration(
+                                   //     prefixIcon: Checkbox(
+                                   //       value: isRap,
+                                   //       onChanged: (value) {
+                                   //         setState(() {
+                                   //           isRap = value!;
+                                   //         });
+                                   //       },
+                                   //     ),
+                                   //     labelText: 'Rap',
+                                   //     border: const OutlineInputBorder(),
+                                   //   ),
+                                   // ),
+                                   // const SizedBox(height: 10,),
+                                   // TextField(
+                                   //   controller: _timeMadhController,
+                                   //   decoration: InputDecoration(
+                                   //     prefixIcon: Checkbox(
+                                   //       value: isMadh,
+                                   //       onChanged: (value) {
+                                   //         setState(() {
+                                   //           isMadh = value!;
+                                   //         });
+                                   //       },
+                                   //     ),
+                                   //     labelText: 'madh',
+                                   //     border: const OutlineInputBorder(),
+                                   //   ),
+                                   // ),
+                                   // const SizedBox(height: 10,),
+                                   // TextField(
+                                   //   controller: _timeBharController,
+                                   //   decoration: InputDecoration(
+                                   //     prefixIcon: Checkbox(
+                                   //       value: isBhar,
+                                   //       onChanged: (value) {
+                                   //         setState(() {
+                                   //           isBhar = value!;
+                                   //         });
+                                   //       },
+                                   //     ),
+                                   //     labelText: 'bhar',
+                                   //     border: const OutlineInputBorder(),
+                                   //   ),
+                                   // ),
+                                 ],
+                               ),
+                                actions: [
+                                  ElevatedButton(onPressed: (){
+                                    Navigator.pop(context);
+                                    selectedValue = null;
+                                    _dropTimeController.clear();
+                                    _dropPriceController.clear();
+                                  }, child: const CommonText.bold("રદ કરો",size: 18)),
+                                  ElevatedButton(
+                                      onPressed: (){
+                                    _itemController.text = "$selectedValue = ${_dropTimeController.text} સમય = ${_dropPriceController.text} ભાડુ";
+                                    workInfo.add(_itemController.text);
+                                    _itemController.text = workInfo.map((e) => e).toString();
+                                    _dropTimeController.clear();
+                                    _dropPriceController.clear();
+                                    Navigator.pop(context);
+                                   }, child: const CommonText.bold("ઉમેરો",size: 18)),
+                                ],
+                              );
+                            }
+                          );
+                        },
+                    );
+                  },
+                  child: const CommonText.bold("ઉમેરો")),
               const SizedBox(
                 height: 10,
               ),
               TextField(
                 maxLines: 4,
+                readOnly: true,
                 controller: _itemController,
                 decoration: const InputDecoration(
-                  labelText: 'Item Names',
+                  labelText: 'આઇટમ નામો',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -270,7 +273,7 @@ class _AddBillState extends State<AddBill> {
               TextField(
                 controller: _totalRentController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Total Rent', border: OutlineInputBorder(), prefixText: "₹ "),
+                decoration: const InputDecoration(labelText: 'કુલ ભાડું', border: OutlineInputBorder(), prefixText: "₹ "),
               ),
               const SizedBox(
                 height: 60,
@@ -281,22 +284,14 @@ class _AddBillState extends State<AddBill> {
                     String name = _nameController.text.trim();
                     String items = _itemController.text.trim();
                     String totalRent = _totalRentController.text.trim();
-                    String startTime = startPicked!.format(context);
-                    String endTime = endPicked!.format(context);
                     String dateTime = _dateTimeController.text.trim();
-                    String totalTime = _dateTotalController.text.trim();
-                    print(startTime);
-                    if (items.isNotEmpty && totalRent.isNotEmpty && endTime.isNotEmpty && startTime.isNotEmpty && totalTime.isNotEmpty && dateTime.isNotEmpty) {
-                      addBillToFirestore(items, name, totalRent,startTime, endTime,totalTime, dateTime);
-                      calculateTimeDifference();
+
+                    if (items.isNotEmpty && totalRent.isNotEmpty && dateTime.isNotEmpty && name.isNotEmpty) {
+                      addBillToFirestore(items, name, totalRent, dateTime);
                       _dateTimeController.clear();
                       _nameController.clear();
                       _itemController.clear();
-                      _dateTimeEndController.clear();
-                      _dateTimeStartController.clear();
-                      _dateTotalController.clear();
                       _totalRentController.clear();
-                      multipleSelected.clear();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('data added successfully.')));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('please fill the boxes')));
@@ -307,7 +302,7 @@ class _AddBillState extends State<AddBill> {
                     width: double.infinity,
                     child: Center(
                       child: CommonText.semiBold(
-                        "Add bill",
+                        "બિલ ઉમેરો",
                         color: AppColor.white,
                         size: 18,
                       ),

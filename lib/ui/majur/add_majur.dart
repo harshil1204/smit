@@ -84,7 +84,7 @@ class _AddMajurState extends State<AddMajur> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -96,7 +96,7 @@ class _AddMajurState extends State<AddMajur> {
                 controller: _majuriController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    labelText: 'majuri',
+                    labelText: 'મજુરી',
                     border: OutlineInputBorder(),
                     prefixText: "₹ "
                 ),
@@ -106,7 +106,7 @@ class _AddMajurState extends State<AddMajur> {
                 controller: _totalMajurController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    labelText: 'total majur',
+                    labelText: 'કુલ મજુર',
                     border: OutlineInputBorder(),
                 ),
               ),
@@ -115,7 +115,7 @@ class _AddMajurState extends State<AddMajur> {
                 controller: _descController,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                    labelText: 'description',
+                    labelText: 'વધુ મહિતી',
                     border: OutlineInputBorder(),
                 ),
               ),

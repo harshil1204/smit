@@ -57,7 +57,7 @@ class _BillMajurListState extends State<BillMajurList> {
                     decoration: BoxDecoration(
                       color: AppColor.darkBoxBg,
                     ),
-                    child: CommonText.bold("Total : ${allTotal.toString()}",size: 18,color:AppColor.primary),
+                    child: CommonText.bold("કુલ : ${allTotal.toString()}",size: 18,color:AppColor.primary),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -86,13 +86,13 @@ class _BillMajurListState extends State<BillMajurList> {
                             ),
                             child: Column(
                               children: [
-                                customRow(data['date'],"date : "),
+                                customRow(data['date'],"તારીખ : "),
                                 // const Divider(color: AppColor.black,thickness: 0.2),
-                                customRow("₹ ${data['majuri']}","majuri : "),
+                                customRow("₹ ${data['majuri']}","મજુરી : "),
                                 //const Divider(color: AppColor.black,thickness: 0.2),
-                                customRow(data['totalMajuri'],"Total majur : "),
-                                customRow("₹ ${total}","Total : "),
-                                customRow(data['description'],"description : "),
+                                customRow(data['totalMajuri'],"કુલ મજુર : "),
+                                customRow("₹ ${total}","કુલ : "),
+                                customRow(data['description'],"વધુ મહિતી: "),
                               ],
                             ),
                           ),

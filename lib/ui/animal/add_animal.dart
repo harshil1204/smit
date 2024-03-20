@@ -77,6 +77,7 @@ class _AddAnimalState extends State<AddAnimal> {
         title: const CommonText.semiBold("Add Bill",size: 18),
       ),
       body: SingleChildScrollView(
+        reverse: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14.0),
           child: Column(
@@ -86,7 +87,7 @@ class _AddAnimalState extends State<AddAnimal> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -97,7 +98,7 @@ class _AddAnimalState extends State<AddAnimal> {
               TextField(
                 controller: _docNameController,
                 decoration: const InputDecoration(
-                    labelText: 'Doctor name',
+                    labelText: 'ડૉક્ટરનું નામ',
                     border: OutlineInputBorder(),
                 ),
               ),
@@ -105,7 +106,7 @@ class _AddAnimalState extends State<AddAnimal> {
               TextField(
                 controller: _docFeeController,
                 decoration: const InputDecoration(
-                  labelText: 'Doctor Fee',
+                  labelText: 'ડૉક્ટર ખર્ચ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -113,7 +114,7 @@ class _AddAnimalState extends State<AddAnimal> {
               TextField(
                 controller: _medicalController,
                 decoration: const InputDecoration(
-                  labelText: 'Medical Cost',
+                  labelText: 'તબીબી ખર્ચ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -122,7 +123,7 @@ class _AddAnimalState extends State<AddAnimal> {
                 controller: _descController,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                  labelText: 'description',
+                  labelText: 'વધુ મહિતી',
                   border: OutlineInputBorder(),
                 ),
               ),

@@ -127,10 +127,10 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                   children: [
                     pw.Text('From :', style: boldText),
                     pw.SizedBox(height: 10),
-                    pw.Text('chovatiya', style: simpleText),
+                    pw.Text('ચોવટીયા', style: simpleText),
                     pw.Container(
                       width: 200,
-                      child: pw.Text('Gundala gir, 395006', style: simpleText),
+                      child: pw.Text('ગુંદાલા ગીર, 395006', style: simpleText),
                     ),
                   ],
                 ),
@@ -174,8 +174,8 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.Text('Invoice :', style: boldText),
-                        pw.Text('Date of Issue :', style: boldText),
-                        pw.Text('Order Date :', style: boldText),
+                        pw.Text('બનાવ્યાની તારીખ:', style: boldText),
+                        pw.Text('ઓર્ડર તારીખ:', style: boldText),
                       ],
                     ),
                     pw.SizedBox(width: 20),
@@ -208,17 +208,17 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                     color: PdfColor.fromHex("#043C7A")
                   ),
                   children: [
-                    buildTitles('Date'),
-                    buildTitles('Items'),
+                    buildTitles('તારીખ'),
+                    buildTitles('વસ્તુઓ'),
                     // buildTitles('Address'),
-                    buildTitles('Amount'),
+                    buildTitles('રકમ'),
                   ]
                 ),
                 pw.TableRow(
                  verticalAlignment: pw.TableCellVerticalAlignment.full,
                   children: [
                     buildItems(data['date'],0),
-                    buildItems(data['work'].toString(),0),
+                    buildItems(data['items'].toString(),0),
                     // buildItems(data['address'],0),
                 pw.Padding(
                   padding: const pw.EdgeInsets.symmetric(horizontal: 7,vertical: 2),
@@ -240,7 +240,7 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                     pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        pw.Text('Sub total :', style: boldText),
+                        pw.Text('પેટા કુલ:', style: boldText),
                         // pw.Text('Received :', style: boldText),
                       ],
                     ),
@@ -271,7 +271,7 @@ Future<Uint8List> generateCenteredTextWithOriginal(var data) async {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Container(),
-                    pw.Text('Balance :', style: boldText),
+                    pw.Text('કુલ બેલેન્સ:', style: boldText),
                     pw.SizedBox(width: 48),
                     pw.Text(formatter.format(int.parse(data['price'].toString())), style: simpleText),
                   ],

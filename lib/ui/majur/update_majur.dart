@@ -99,7 +99,7 @@ class _updateMajurState extends State<updateMajur> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const CommonText.semiBold("Update Bill",size: 18),
+        title: const CommonText.semiBold("સુધારો",size: 18),
         actions: [
           IconButton(
               onPressed: (){
@@ -119,7 +119,7 @@ class _updateMajurState extends State<updateMajur> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -131,7 +131,7 @@ class _updateMajurState extends State<updateMajur> {
                 controller: _majuriController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    labelText: 'majuri',
+                    labelText: 'મજુરી',
                     border: OutlineInputBorder(),
                     prefixText: "₹ "
                 ),
@@ -141,7 +141,7 @@ class _updateMajurState extends State<updateMajur> {
                 controller: _totalMajurController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'total majur',
+                  labelText: 'કુલ મજુર',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -150,7 +150,7 @@ class _updateMajurState extends State<updateMajur> {
                 controller: _descController,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                  labelText: 'description',
+                  labelText: 'વધુ મહિતી',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -183,7 +183,7 @@ class _updateMajurState extends State<updateMajur> {
                     height: 30,
                     width: double.infinity,
                     child: Center(
-                      child: CommonText.semiBold("update bill",color: AppColor.white,size: 18,),
+                      child: CommonText.semiBold("સુધારો",color: AppColor.white,size: 18,),
                     ),
                   )
               )

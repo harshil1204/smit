@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
+import 'package:smit/ui/total/total_cost.dart';
 
 import 'homepage.dart';
 
@@ -36,7 +37,12 @@ class _MainScreenState extends State<MainScreen> {
                   // if(index==0){
                   //   Navigator.push(context, MaterialPageRoute(builder: (context) =>  BillDavaList(),));
                   // }
+                  if(index == 5){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  const TotalCost()));
+                  }
+                  else{
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomePage(title: items[index],ind: index),));
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(

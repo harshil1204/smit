@@ -121,7 +121,7 @@ class _UpdateKhatarState extends State<UpdateKhatar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const CommonText.semiBold("Update Bill",size: 18),
+        title: const CommonText.semiBold("સુધારો",size: 18),
         actions: [
           IconButton(
               onPressed: (){
@@ -160,7 +160,7 @@ class _UpdateKhatarState extends State<UpdateKhatar> {
                         ),
                       ],
                     ),
-                    child: (imageUrl == null)
+                    child: (imageUrl == null || imageUrl == "")
                         ? const Icon(Icons.photo)
                         : Image.network(imageUrl.toString(),height: 50,fit: BoxFit.fill,)
                 ),
@@ -170,7 +170,7 @@ class _UpdateKhatarState extends State<UpdateKhatar> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -182,7 +182,7 @@ class _UpdateKhatarState extends State<UpdateKhatar> {
                 controller: _priceController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    labelText: 'price',
+                    labelText: 'ખર્ચ',
                     border: OutlineInputBorder(),
                     prefixText: "₹ "
                 ),
@@ -200,7 +200,9 @@ class _UpdateKhatarState extends State<UpdateKhatar> {
                       updateBillToFirestore(price, dateTime);
                       _dateTimeController.clear();
                       _priceController.clear();
+                      setState(() {
                       imageUrl="";
+                      });
                       ScaffoldMessenger.of(context)
                           .showSnackBar(const SnackBar(content: Text('data added successfully.')));
                     }
@@ -213,7 +215,7 @@ class _UpdateKhatarState extends State<UpdateKhatar> {
                     height: 30,
                     width: double.infinity,
                     child: Center(
-                      child: CommonText.semiBold("Update bill",color: AppColor.white,size: 18,),
+                      child: CommonText.semiBold("તારીખ",color: AppColor.white,size: 18,),
                     ),
                   )
               )

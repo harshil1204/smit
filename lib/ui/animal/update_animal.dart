@@ -112,7 +112,7 @@ class _updateAnimalState extends State<updateAnimal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const CommonText.semiBold("Update Bill",size: 18),
+        title: const CommonText.semiBold("તારીખ",size: 18),
         actions: [
           IconButton(
               onPressed: (){
@@ -132,7 +132,7 @@ class _updateAnimalState extends State<updateAnimal> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -143,7 +143,7 @@ class _updateAnimalState extends State<updateAnimal> {
               TextField(
                 controller: _docNameController,
                 decoration: const InputDecoration(
-                  labelText: 'Doctor name',
+                  labelText: 'ડૉક્ટરનું નામ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -151,7 +151,7 @@ class _updateAnimalState extends State<updateAnimal> {
               TextField(
                 controller: _docFeeController,
                 decoration: const InputDecoration(
-                  labelText: 'Doctor Fee',
+                  labelText: 'ડૉક્ટર ખર્ચ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -159,7 +159,7 @@ class _updateAnimalState extends State<updateAnimal> {
               TextField(
                 controller: _medicalController,
                 decoration: const InputDecoration(
-                  labelText: 'Medical Cost',
+                  labelText: 'તબીબી ખર્ચ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -168,7 +168,7 @@ class _updateAnimalState extends State<updateAnimal> {
                 controller: _descController,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                  labelText: 'description',
+                  labelText: 'વધુ મહિતી',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -203,7 +203,7 @@ class _updateAnimalState extends State<updateAnimal> {
                     height: 30,
                     width: double.infinity,
                     child: Center(
-                      child: CommonText.semiBold("Update bill",color: AppColor.white,size: 18,),
+                      child: CommonText.semiBold("સુધારો",color: AppColor.white,size: 18,),
                     ),
                   )
               )

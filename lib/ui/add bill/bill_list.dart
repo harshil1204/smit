@@ -68,7 +68,7 @@ class _BillListState extends State<BillList> {
                       var data=snapshot.data!.docs[index];
                       return InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPage(data:data),));
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => PdfPage(data:data),));
                         },
                         child: Card(
                           clipBehavior: Clip.hardEdge,
@@ -82,13 +82,10 @@ class _BillListState extends State<BillList> {
                             ),
                             child: Column(
                               children: [
-                                customRow(data['date'],"date : "),
-                                customRow(data['name'],"name : "),
-                                customRow(data['start'],"start Time : "),
-                                customRow(data['end'],"end Time : "),
-                                customRow(data['workingHours'],"working Time : "),
-                                customRow(data['price'],"rent : "),
-                                customRow(data['work'],"Items : "),
+                                customRow(data['date'],"તારીખ : "),
+                                customRow(data['name'],"નામ : "),
+                                customRow(data['price'],"ભાડું: "),
+                                customRow(data['items'],"વસ્તુઓ: "),
                               ],
                             ),
                           ),

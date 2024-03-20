@@ -136,7 +136,7 @@ class _AddKhatarState extends State<AddKhatar> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -148,7 +148,7 @@ class _AddKhatarState extends State<AddKhatar> {
                 controller: _priceController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    labelText: 'price',
+                    labelText: 'ખર્ચ',
                     border: OutlineInputBorder(),
                     prefixText: "₹ "
                 ),

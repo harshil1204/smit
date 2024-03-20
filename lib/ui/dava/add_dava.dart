@@ -136,7 +136,7 @@ class _AddDavaKhatarState extends State<AddDavaKhatar> {
                 controller: _dateTimeController,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  labelText: 'Choose order Date',
+                  labelText: 'તારીખ',
                   border: OutlineInputBorder(),
                 ),
                 onTap: (){
@@ -148,7 +148,7 @@ class _AddDavaKhatarState extends State<AddDavaKhatar> {
                 controller: _priceController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    labelText: 'price',
+                    labelText: 'ખર્ચ',
                     border: OutlineInputBorder(),
                     prefixText: "₹ "
                 ),

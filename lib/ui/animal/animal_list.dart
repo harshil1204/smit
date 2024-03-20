@@ -5,8 +5,7 @@ import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
 import 'package:smit/ui/animal/add_animal.dart';
 import 'package:smit/ui/animal/update_animal.dart';
-import 'package:smit/ui/majur/add_majur.dart';
-import 'package:smit/ui/majur/update_majur.dart';
+
 
 class BillAnimalList extends StatefulWidget {
   String? name;
@@ -59,7 +58,7 @@ class _BillAnimalListState extends State<BillAnimalList> {
                     decoration: BoxDecoration(
                       color: AppColor.darkBoxBg,
                     ),
-                    child: CommonText.bold("Total : ${allTotal.toString()}",size: 18,color:AppColor.primary),
+                    child: CommonText.bold("કુલ : ${allTotal.toString()}",size: 18,color:AppColor.primary),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -88,12 +87,12 @@ class _BillAnimalListState extends State<BillAnimalList> {
                             ),
                             child: Column(
                               children: [
-                                customRow(data['date'],"date : "),
-                                customRow(data['docName'],"Doctor Name : "),
-                                customRow("₹ ${data['docFee']}","Doctor Fee : "),
-                                customRow("₹ ${data['medical']}","Medical Cost : "),
-                                customRow(data['description'],"description : "),
-                                customRow("₹ ${total}","Total : "),
+                                customRow(data['date'],"તારીખ : "),
+                                customRow(data['docName'],"ડૉક્ટરનું નામ: "),
+                                customRow("₹ ${data['docFee']}","ડૉક્ટર ખર્ચ : "),
+                                customRow("₹ ${data['medical']}","તબીબી ખર્ચ: "),
+                                customRow(data['description'],"વધુ મહિતી: "),
+                                customRow("₹ ${total}","કુલ : "),
                               ],
                             ),
                           ),

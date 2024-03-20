@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smit/resource/colors.dart';
 import 'package:smit/resource/text.dart';
-import 'package:smit/ui/add%20bill/update_bill.dart';
-
 import 'package:smit/ui/pdf%20page/create_pdf.dart';
 
 class PdfPage extends StatefulWidget {
@@ -35,12 +33,12 @@ class _PdfPageState extends State<PdfPage> {
         centerTitle: false,
         title: const CommonText.semiBold("details page",size: 18,),
         actions: [
-          IconButton(
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateDetails(data: widget.data),));
-              },
-              icon: const Icon(Icons.edit,)
-          ),
+          // IconButton(
+          //     onPressed: (){
+          //       Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateDetails(data: widget.data),));
+          //     },
+          //     icon: const Icon(Icons.edit,)
+          // ),
           IconButton(
               onPressed: (){
                 showDialog(
@@ -58,6 +56,7 @@ class _PdfPageState extends State<PdfPage> {
                           ElevatedButton(
                               onPressed: (){
                                 deleteBill(widget.data.id.toString());
+                                Navigator.pop(context);
                               },
                               child: const CommonText.semiBold("delete",size: 15,))
                         ],
@@ -124,36 +123,8 @@ class _PdfPageState extends State<PdfPage> {
                       ),
                       Row(
                         children: [
-                          const Expanded(child: CommonText.extraBold("start Time :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold(widget.data['start'].toString(),size: 18,color: AppColor.black,)),
-                        ],
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Divider(color: AppColor.primary),
-                      ), Row(
-                        children: [
-                          const Expanded(child: CommonText.extraBold("end Time :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold(widget.data['end'].toString(),size: 18,color: AppColor.black,)),
-                        ],
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Divider(color: AppColor.primary),
-                      ),
-                      Row(
-                        children: [
-                          const Expanded(child: CommonText.extraBold("Working Time :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold(widget.data['workingHours'].toString(),size: 18,color: AppColor.black,)),
-                        ],
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Divider(color: AppColor.primary),
-                      ), Row(
-                        children: [
                           const Expanded(child: CommonText.extraBold("Items :",size: 18,color: AppColor.black,)),
-                          Expanded(child: CommonText.extraBold(widget.data['work'].toString(),size: 18,color: AppColor.black,)),
+                          Expanded(child: CommonText.extraBold(widget.data['items'].toString(),size: 18,color: AppColor.black,)),
                         ],
                       ),
                       const Padding(
